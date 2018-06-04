@@ -72,10 +72,6 @@ namespace SimulateKeypress_GUI
                     {
                         SendKeys.SendWait ("\r");
                     }
-                    //if (returnR && c == '\r')
-                    //{
-                    //    SendKeys.SendWait ("\r");
-                    //}
                 }
             }
             while (loop);

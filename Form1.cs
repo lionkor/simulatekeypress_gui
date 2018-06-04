@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -77,6 +78,11 @@ namespace SimulateKeypress_GUI
             TextBox.Enabled = true;
             InfiniteLoop.Enabled = true;
             TimeBeforeStart.Enabled = true;
+        }
+
+        private void linkLabel1_LinkClicked (object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start ("https://github.com/lionkor/simulatekeypress_gui/releases/");
         }
     }
 }
