@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,8 @@ namespace SimulateKeypress_GUI
         }
 
         public static void Start (Form1 form, int startDelay, int charDelay,
-            string[] array, bool returnE, bool returnP, bool returnR, bool returnQ, bool loop)
+            string[] array, bool returnE, bool returnP, bool returnR,
+            bool returnQ, bool loop, bool misspell)
         {
             Thread.Sleep (startDelay);
             string text = "";
@@ -43,38 +45,53 @@ namespace SimulateKeypress_GUI
                 text = text.Replace ("!!", "!");
                 text = text.Replace ("??", "?");
             }
-            do
+            foreach (char c in text)
             {
-                foreach (char c in text)
+                Thread.Sleep (charDelay);
+                if (form.Stop)
                 {
-                    Thread.Sleep (charDelay);
-                    if (form.Stop)
+                    break;
+                }
+                try
+                {
+                    if (misspell)
                     {
-                        return;
+                        string send = c.ToString ();
+                        if (new Random ().Next (0, 50) == 25)
+                        {
+                            send = "abcdefghijklmnopqrstuvwxyz"
+                                .ToCharArray ()[new Random (Convert.ToInt32
+                                    (Process.GetCurrentProcess ().TotalProcessorTime.Ticks))
+                                .Next (0, 26)].ToString ();
+                        }
+                        SendKeys.SendWait (send);
                     }
-                    try
+                    else
                     {
                         SendKeys.SendWait (c.ToString ());
                     }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine (c + " : " + e);
-                    }
-                    if (returnP && c == '.')
-                    {
-                        SendKeys.SendWait ("\r");
-                    }
-                    if (returnQ && c == '?')
-                    {
-                        SendKeys.SendWait ("\r");
-                    }
-                    if (returnE && c == '!')
-                    {
-                        SendKeys.SendWait ("\r");
-                    }
+                }
+                catch (Exception e)
+                {
+                    // oof
+                }
+                if (returnP && c == '.')
+                {
+                    SendKeys.SendWait ("\r");
+                }
+                if (returnQ && c == '?')
+                {
+                    SendKeys.SendWait ("\r");
+                }
+                if (returnE && c == '!')
+                {
+                    SendKeys.SendWait ("\r");
+                }
+                if (form.Stop)
+                {
+                    break;
                 }
             }
-            while (loop);
         }
     }
 }

@@ -29,7 +29,9 @@ namespace SimulateKeypress_GUI
                 Convert.ToInt32 (DelayMS.Value),
                 TextBox.Lines, returnExclamation.Checked,
                 returnPeriod.Checked, returnR.Checked,
-                returnQuestion.Checked, InfiniteLoop.Checked);
+                returnQuestion.Checked, false,
+                RandomMisspelling.Checked);
+            // TODO remove infiniteloop entirely
             stop ();
             
             enableAll ();
@@ -56,7 +58,7 @@ namespace SimulateKeypress_GUI
             returnQuestion.Enabled = false;
             returnR.Enabled = false;
             TextBox.Enabled = false;
-            InfiniteLoop.Enabled = false;
+            //InfiniteLoop.Enabled = false;
             TimeBeforeStart.Enabled = false;
         }
 
@@ -69,7 +71,7 @@ namespace SimulateKeypress_GUI
             returnQuestion.Enabled = true;
             returnR.Enabled = true;
             TextBox.Enabled = true;
-            InfiniteLoop.Enabled = true;
+            //InfiniteLoop.Enabled = true;
             TimeBeforeStart.Enabled = true;
         }
 
